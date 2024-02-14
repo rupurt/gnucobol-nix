@@ -6,21 +6,23 @@
     pname = "gnu-cobol-contrib-gcsort";
     owner = "rupurt";
     repo = "GnuCOBOL-Contrib";
-    rev = "e79455fe085d56085b9d9e8311cd6ab7f8fbfb2f";
-    gnu-cobol-contrib-gcsort-version = "0.0.0";
-    sha256 = "sha256-30g5Y5Inqonrk+qW1VvkDP26NB6zPr/ieT5JoPjyJzg=";
+    rev = "master";
+    version = "1.3.7";
+    sha256 = "sha256-CyYpdAiHhzz5h4BsL3RoxH2j3XnSBK7HxQERlsYKwm0=";
   };
   args = defaultArgs // specialArgs;
+  repo = pkgs.fetchFromGitHub {
+    owner = args.owner;
+    repo = args.repo;
+    rev = args.rev;
+    sparseCheckout = ["tools/GCSORT"];
+    sha256 = args.sha256;
+  };
 in
   pkgs.gccStdenv.mkDerivation {
     pname = args.pname;
-    version = "${args.gnu-cobol-contrib-gcsort-version}.${args.rev}";
-    src = pkgs.fetchFromGitHub {
-      owner = args.owner;
-      repo = args.repo;
-      rev = args.rev;
-      sha256 = args.sha256;
-    };
+    version = args.version;
+    src = "${repo}/tools/GCSORT";
 
     nativeBuildInputs = [
       pkgs.autoconf
@@ -33,8 +35,8 @@ in
 
     buildInputs =
       [
+        pkgs.gnu-cobol-pkgs.gnu-cobol.dev
         pkgs.gnu-cobol-pkgs.gnu-cobol.lib
-        # gnu-cobol-pkgs.gnu-cobol
         # cjson
         pkgs.db
         pkgs.gettext
@@ -50,15 +52,15 @@ in
 
     outputs = ["bin" "dev" "lib" "out"];
 
-    # Without this, we get a cycle between bin and dev
-    propagatedBuildOutputs = [];
+    # # Without this, we get a cycle between bin and dev
+    # propagatedBuildOutputs = [];
 
-    # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
-    # enable libtool version installed with nix
-    preConfigure = ''
-      autoreconf -vfi -I m4
-      ./autogen.sh
-    '';
+    # # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
+    # # enable libtool version installed with nix
+    # preConfigure = ''
+    #   autoreconf -vfi -I m4
+    #   ./autogen.sh
+    # '';
 
     enableParallelBuilding = true;
 
