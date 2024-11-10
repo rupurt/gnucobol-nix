@@ -6,9 +6,17 @@
     pname = "gnu-cobol";
     owner = "rupurt";
     repo = "GnuCOBOL";
-    rev = "8c5ea986f0e9b9c2b6492b9857d291ff301db78a";
-    gnu-cobol-version = "4.0.0";
-    sha256 = "sha256-30g5Y5Inqonrk+qW1VvkDP26NB6zPr/ieT5JoPjyJzg=";
+    # This is the trunk of the current development version 4.0 which doesn't
+    # seem to have cob_load_collation.
+    # rev = "8c5ea986f0e9b9c2b6492b9857d291ff301db78a";
+    # gnu-cobol-version = "4.0.0";
+    #
+    # Last commit for GnuCOBOL 3.2
+    # rev = "e06241f7283ece918bf03d0e0aa13dec7ce4acb0";
+    # rev = "gnucobol-3.2";
+    rev = "0c8912ad8bfb25aa733724bfc1f981a29993eb6c";
+    gnu-cobol-version = "3.2.0";
+    sha256 = "sha256-10wBjVe8yfdZkqfDjED3Casb32oKe2pEI0epT6paJgI=";
   };
   args = defaultArgs // specialArgs;
 in
@@ -38,8 +46,8 @@ in
       gmp
       libxml2
       ncurses
-      flex
-      bison
+      # flex
+      # bison
     ];
 
     outputs = ["bin" "dev" "lib" "out"];

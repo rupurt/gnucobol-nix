@@ -8,7 +8,7 @@
     repo = "GnuCOBOL-Contrib";
     rev = "e79455fe085d56085b9d9e8311cd6ab7f8fbfb2f";
     gnu-cobol-contrib-gcsort-version = "0.0.0";
-    sha256 = "sha256-30g5Y5Inqonrk+qW1VvkDP26NB6zPr/ieT5JoPjyJzg=";
+    sha256 = "sha256-v/flCpifrcDknhUWnweb13UlzU2SpVTqKRbVks7v/NI=";
   };
   args = defaultArgs // specialArgs;
 in
@@ -19,6 +19,7 @@ in
       owner = args.owner;
       repo = args.repo;
       rev = args.rev;
+      sparseCheckout = ["tools/GCSORT"];
       sha256 = args.sha256;
     };
 
@@ -33,12 +34,13 @@ in
 
     buildInputs = with pkgs; [
       gnu-cobol-pkgs.gnu-cobol.lib
+      gnu-cobol-pkgs.gnu-cobol.dev
       # gnu-cobol-pkgs.gnu-cobol
       # cjson
       db
       gettext
       gmp
-      # libxml2
+      libxml2
       # ncurses
       flex
       bison
@@ -49,12 +51,15 @@ in
     # Without this, we get a cycle between bin and dev
     propagatedBuildOutputs = [];
 
-    # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
-    # enable libtool version installed with nix
-    preConfigure = ''
-      autoreconf -vfi -I m4
-      ./autogen.sh
-    '';
+    # # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
+    # # enable libtool version installed with nix
+    # preConfigure = ''
+    #   ls -l .
+    #   ls -l tools
+    #   ls -l tools/GCSORT
+    #   autoreconf -vfi -I m4
+    #   ./autogen.sh
+    # '';
 
     enableParallelBuilding = true;
 
@@ -77,6 +82,16 @@ in
     #   hello="$(./hello-cobol | tee >(cat >&2))"
     #   [[ "$hello" == "$message" ]] || exit 1
     # '';
+
+    # TODO:
+    # - how to ensure -lcob is linked to the headers
+    # preBuild = ''
+    #   makeFlagsArray+=(LDFLAGS="-lcob")
+    # '';
+
+    buildPhase = ''
+      make -C tools/GCSORT
+    '';
 
     meta = with pkgs.lib; {
       description = "A sort tool that implements a subset of the Micro Focus `MFSORT` utility";
