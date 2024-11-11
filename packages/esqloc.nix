@@ -6,9 +6,9 @@
     pname = "esqloc";
     owner = "rupurt";
     repo = "GnuCOBOL-Contrib";
-    rev = "e79455fe085d56085b9d9e8311cd6ab7f8fbfb2f";
-    version = "3-2022.01.15";
-    sha256 = "sha256-hnF1csxvhud/vRPsi5e8K8YtkI/BZb2tsKQKG0YAvVY=";
+    rev = "b9548c4261eae8d5dc83d27b034145bdece2b0c8";
+    version = "3-2024.04.30";
+    sha256 = "sha256-2AbcbtEnX/XvGWFbvH/RLOu1BiPh81iXECizBBMxLcc=";
   };
   args = defaultArgs // specialArgs;
   repo = pkgs.fetchFromGitHub {
