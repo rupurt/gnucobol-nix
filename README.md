@@ -28,6 +28,7 @@ of the upstream SourceForge SVN repositories.
     systems = ["x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin"];
     outputs = flake-utils.lib.eachSystem systems (system: let
       pkgs = import nixpkgs {
+        inherit system;
         overlays = [
           gnucobol.overlay
         ];
@@ -42,7 +43,7 @@ of the upstream SourceForge SVN repositories.
 
         packages = with pkgs; [
           gnucobol-pkgs.gnucobol.bin
-          gnucobol-pkgs.esqloc.bin
+          gnucobol-pkgs.esqloc
         ];
       };
     });
