@@ -1,4 +1,4 @@
-# gnu-cobol-nix
+# gnucobol-nix
 
 Nix flake to build [GnuCOBOL](https://sourceforge.net/p/gnucobol/code/HEAD/tree) and [GnuCOBOL Contrib](https://sourceforge.net/p/gnucobol/contrib/HEAD/tree)
 on Linux & MacOS. This flake fetches source from Github mirrors [1](https://github.com/rupurt/GnuCOBOL), [2](https://github.com/rupurt/GnuCOBOL-Contrib)
@@ -13,15 +13,15 @@ of the upstream SourceForge SVN repositories.
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    gnu-cobol= {
-      url = "github:rupurt/gnu-cobol-nix";
+    gnucobol= {
+      url = "github:rupurt/gnucobol-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs = {
     flake-utils,
-    gnu-cobol,
+    gnucobol,
     nixpkgs,
     ...
   }: let
@@ -29,7 +29,7 @@ of the upstream SourceForge SVN repositories.
     outputs = flake-utils.lib.eachSystem systems (system: let
       pkgs = import nixpkgs {
         overlays = [
-          gnu-cobol.overlay
+          gnucobol.overlay
         ];
       };
     in {
@@ -41,7 +41,8 @@ of the upstream SourceForge SVN repositories.
         name = "default dev shell";
 
         packages = with pkgs; [
-          gnu-cobol-pkgs.gnu-cobol.bin
+          gnucobol-pkgs.gnucobol.bin
+          gnucobol-pkgs.esqloc.bin
         ];
       };
     });

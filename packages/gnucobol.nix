@@ -3,7 +3,7 @@
   specialArgs ? {},
 }: let
   defaultArgs = {
-    pname = "gnu-cobol";
+    pname = "gnucobol";
     version = "3.2.0";
     owner = "rupurt";
     repo = "GnuCOBOL";
@@ -25,8 +25,9 @@ in
     nativeBuildInputs = [
       pkgs.autoconf
       pkgs.automake
-      pkgs.libtool
       pkgs.help2man
+      pkgs.libtool
+      pkgs.pkg-config
       pkgs.texinfo
       pkgs.texliveBasic
     ];
@@ -46,7 +47,12 @@ in
         pkgs.darwin.apple_sdk.frameworks.CoreFoundation
       ];
 
-    outputs = ["bin" "dev" "lib" "out"];
+    outputs = [
+      "bin"
+      "dev"
+      "lib"
+      "out"
+    ];
 
     # Without this, we get a cycle between bin and dev
     propagatedBuildOutputs = [];

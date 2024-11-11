@@ -21,13 +21,16 @@
     in {
       # packages exported by the flake
       packages = rec {
-        gnu-cobol = pkgs.callPackage ./packages/gnu-cobol.nix {
+        gnucobol = pkgs.callPackage ./packages/gnucobol.nix {
           inherit pkgs;
         };
-        gnu-cobol-contrib-gcsort = pkgs.callPackage ./packages/gnu-cobol-contrib-gcsort.nix {
+        gcsort = pkgs.callPackage ./packages/gcsort.nix {
           inherit pkgs;
         };
-        default = gnu-cobol;
+        esqloc = pkgs.callPackage ./packages/esqloc.nix {
+          inherit pkgs;
+        };
+        default = gnucobol;
       };
 
       # nix fmt
@@ -39,7 +42,7 @@
       # Overlay that can be imported so you can access the packages
       # using gnu-cobol-nix.overlay
       overlay = final: prev: {
-        gnu-cobol-pkgs = outputs.packages.${prev.system};
+        gnucobol-pkgs = outputs.packages.${prev.system};
       };
     };
 }

@@ -3,12 +3,12 @@
   specialArgs ? {},
 }: let
   defaultArgs = {
-    pname = "gnu-cobol-contrib-gcsort";
+    pname = "gcsort";
     owner = "rupurt";
     repo = "GnuCOBOL-Contrib";
-    rev = "master";
+    rev = "e79455fe085d56085b9d9e8311cd6ab7f8fbfb2f";
     version = "1.3.7";
-    sha256 = "sha256-CyYpdAiHhzz5h4BsL3RoxH2j3XnSBK7HxQERlsYKwm0=";
+    sha256 = "sha256-v/flCpifrcDknhUWnweb13UlzU2SpVTqKRbVks7v/NI=";
   };
   args = defaultArgs // specialArgs;
   repo = pkgs.fetchFromGitHub {
@@ -35,22 +35,22 @@ in
 
     buildInputs =
       [
-        pkgs.gnu-cobol-pkgs.gnu-cobol.dev
-        pkgs.gnu-cobol-pkgs.gnu-cobol.lib
-        # cjson
-        pkgs.db
-        pkgs.gettext
-        pkgs.gmp
-        # libxml2
-        # ncurses
-        pkgs.flex
-        pkgs.bison
+        pkgs.gnucobol-pkgs.gnucobol.dev
+        pkgs.gnucobol-pkgs.gnucobol.lib
+        # # cjson
+        # pkgs.db
+        # pkgs.gettext
+        # pkgs.gmp
+        # # libxml2
+        # # ncurses
+        # pkgs.flex
+        # pkgs.bison
       ]
       ++ pkgs.lib.optional pkgs.stdenv.isDarwin [
-        pkgs.darwin.apple_sdk.frameworks.CoreFoundation
+        # pkgs.darwin.apple_sdk.frameworks.CoreFoundation
       ];
 
-    outputs = ["bin" "dev" "lib" "out"];
+    # outputs = ["bin" "dev" "lib" "out"];
 
     # # Without this, we get a cycle between bin and dev
     # propagatedBuildOutputs = [];
