@@ -30,10 +30,9 @@ in
       libtool
     ];
 
-    buildInputs =
-      with pkgs; [
-        unixODBC
-      ];
+    buildInputs = with pkgs; [
+      unixODBC
+    ];
 
     preConfigure = ''
       autoreconf -vfi -I m4

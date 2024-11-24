@@ -6,9 +6,9 @@
     pname = "gcsort";
     owner = "rupurt";
     repo = "GnuCOBOL-Contrib";
-    rev = "e79455fe085d56085b9d9e8311cd6ab7f8fbfb2f";
-    version = "1.3.7";
-    sha256 = "sha256-v/flCpifrcDknhUWnweb13UlzU2SpVTqKRbVks7v/NI=";
+    rev = "b9548c4261eae8d5dc83d27b034145bdece2b0c8";
+    version = "1.04.01";
+    sha256 = "sha256-gHm9yf7hjEK7BMhBuSZZ8WL2EhXEqkMNXv8ClmIyeBM=";
   };
   args = defaultArgs // specialArgs;
   repo = pkgs.fetchFromGitHub {
@@ -25,70 +25,40 @@ in
     src = "${repo}/tools/GCSORT";
 
     nativeBuildInputs = [
-      pkgs.autoconf
-      pkgs.automake
-      pkgs.libtool
-      # help2man
-      # texinfo
-      # texliveBasic
     ];
 
     buildInputs =
       [
         pkgs.gnucobol-pkgs.gnucobol.dev
         pkgs.gnucobol-pkgs.gnucobol.lib
-        # # cjson
-        # pkgs.db
-        # pkgs.gettext
-        # pkgs.gmp
-        # # libxml2
-        # # ncurses
-        # pkgs.flex
-        # pkgs.bison
       ]
       ++ pkgs.lib.optional pkgs.stdenv.isDarwin [
-        # pkgs.darwin.apple_sdk.frameworks.CoreFoundation
       ];
 
-    # outputs = ["bin" "dev" "lib" "out"];
+    buildPhase = ''
+      runHook preBuild
 
-    # # Without this, we get a cycle between bin and dev
-    # propagatedBuildOutputs = [];
+      make
 
-    # # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
-    # # enable libtool version installed with nix
-    # preConfigure = ''
-    #   autoreconf -vfi -I m4
-    #   ./autogen.sh
-    # '';
+      runHook postBuild
+    '';
+
+    installPhase = ''
+      runHook preInstall
+
+      mkdir -p $out/bin
+      mv gcsort $out/bin
+
+      runHook postInstall
+    '';
 
     enableParallelBuilding = true;
-
-    # installFlags = ["install-pdf" "install-html" "localedir=$out/share/locale"];
-
-    # # Sanity check on the installed binary
-    # installCheckPhase = ''
-    #   message="Hello, COBOL!"
-    #   # COBOL is whitespace sensitive in fixed form which is the default in GnuCOBOL
-    #   # and IBM mainframes.
-    #   tee hello.cbl <<EOF
-    #          IDENTIFICATION DIVISION.
-    #          PROGRAM-ID. HELLO.
-    #
-    #          PROCEDURE DIVISION.
-    #          DISPLAY "$message".
-    #          STOP RUN.
-    #   EOF
-    #   $bin/bin/cobc -x -o hello-cobol "hello.cbl"
-    #   hello="$(./hello-cobol | tee >(cat >&2))"
-    #   [[ "$hello" == "$message" ]] || exit 1
-    # '';
 
     meta = with pkgs.lib; {
       description = "A sort tool that implements a subset of the Micro Focus `MFSORT` utility";
       homepage = "https://sourceforge.net/p/gnucobol/contrib";
       license = with licenses; [gpl3Only lgpl3Only];
-      maintainers = with maintainers; [ericsagnes lovesegfault];
+      maintainers = with maintainers; [rupurt];
       platforms = platforms.all;
     };
   }

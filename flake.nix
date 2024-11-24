@@ -40,7 +40,7 @@
     outputs
     // {
       # Overlay that can be imported so you can access the packages
-      # using gnu-cobol-nix.overlay
+      # using gnucobol-nix.overlay
       overlay = final: prev: {
         gnucobol-pkgs = outputs.packages.${prev.system};
       };
