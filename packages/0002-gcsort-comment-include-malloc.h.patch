@@ -1,0 +1,53 @@
+From 9f4ba6c4b0dfe73c9ef5accd3b08fb3ea1be6198 Mon Sep 17 00:00:00 2001
+From: Alex Kwiatkowski <alex+git@fremantle.io>
+Date: Sat, 23 Nov 2024 21:19:23 -0800
+Subject: [PATCH] comment include malloc.h
+
+---
+ copyfile.c | 2 +-
+ job.c      | 2 +-
+ outfil.c   | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/tools/GCSORT/copyfile.c b/tools/GCSORT/copyfile.c
+index 51ce01b..4f0bdf2 100644
+--- a/copyfile.c
++++ b/copyfile.c
+@@ -19,7 +19,7 @@
+ */
+  
+ #include <sys/stat.h>
+-#include <malloc.h>
++/* #include <malloc.h> */
+ #include <time.h>
+ #include <ctype.h>
+ 
+diff --git a/job.c b/job.c
+index 62e968b..dec9e36 100644
+--- a/job.c
++++ b/job.c
+@@ -20,7 +20,7 @@
+ */
+ #define _GNU_SOURCE
+ #include <sys/stat.h>
+-#include <malloc.h>
++/* #include <malloc.h> */
+ #include <time.h>
+ #include <ctype.h>
+ 
+diff --git a/outfil.c b/outfil.c
+index 46ff471..f3eee6b 100644
+--- a/outfil.c
++++ b/outfil.c
+@@ -25,7 +25,7 @@
+ #include <sys/stat.h>
+ #include <math.h>
+ #include <limits.h>
+-#include <malloc.h>
++/* #include <malloc.h> */
+ #include <time.h>
+ #include "libgcsort.h"
+ #include <string.h>
+-- 
+2.46.0
+
