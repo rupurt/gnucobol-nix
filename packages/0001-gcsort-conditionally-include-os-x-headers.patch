@@ -1,0 +1,47 @@
+From b301ab5a260884aab8255cad1fa5c2515399fd63 Mon Sep 17 00:00:00 2001
+From: Alex Kwiatkowski <alex+git@fremantle.io>
+Date: Sat, 23 Nov 2024 17:04:26 -0800
+Subject: [PATCH] conditionally include os x headers
+
+---
+ copyfile.h | 6 +++++-
+ job.h      | 6 +++++-
+ 2 files changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/copyfile.h b/copyfile.h
+index e699b1c..8150443 100644
+--- a/copyfile.h
++++ b/copyfile.h
+@@ -32,7 +32,11 @@
+ 	#define _strtoll    _strtoi64
+ #else
+ 	#include <limits.h>
+-	#include <sys/io.h>
++#ifdef __APPLE__
++  #include <sys/uio.h>
++#else
++  #include <sys/io.h>
++#endif
+ 	#include <time.h>
+ 	#include <fcntl.h>
+ 	#define _strtoll   strtoll
+diff --git a/job.h b/job.h
+index f6d002d..c95b76b 100644
+--- a/job.h
++++ b/job.h
+@@ -34,7 +34,11 @@
+ 	/* #define GCThread __declspec( thread ) */
+ #else
+ 	#include <limits.h>
+-	#include <sys/io.h>
++#ifdef __APPLE__
++  #include <sys/uio.h>
++#else
++  #include <sys/io.h>
++#endif
+ 	#include <time.h>
+ 	#include <fcntl.h>
+ 	#define _strtoll   strtoll
+-- 
+2.46.0
+

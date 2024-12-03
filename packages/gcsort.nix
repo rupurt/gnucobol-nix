@@ -24,31 +24,31 @@ in
     version = args.version;
     src = "${repo}/tools/GCSORT";
 
-    nativeBuildInputs = [
-    ];
+    nativeBuildInputs = [];
 
     buildInputs =
       [
         pkgs.gnucobol-pkgs.gnucobol.dev
         pkgs.gnucobol-pkgs.gnucobol.lib
       ]
-      ++ pkgs.lib.optional pkgs.stdenv.isDarwin [
-      ];
+      ++ pkgs.lib.optional pkgs.stdenv.isDarwin [];
+
+    patches = [
+      ./0001-gcsort-conditionally-include-os-x-headers.patch
+      ./0002-gcsort-comment-include-malloc.h.patch
+      ./0003-use-posix-definitions-for-stat-values.patch
+    ];
 
     buildPhase = ''
       runHook preBuild
-
       make
-
       runHook postBuild
     '';
 
     installPhase = ''
       runHook preInstall
-
       mkdir -p $out/bin
       mv gcsort $out/bin
-
       runHook postInstall
     '';
 
