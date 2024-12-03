@@ -36,6 +36,7 @@ in
     patches = [
       ./0001-gcsort-conditionally-include-os-x-headers.patch
       ./0002-gcsort-comment-include-malloc.h.patch
+      ./0003-use-posix-definitions-for-stat-values.patch
     ];
 
     buildPhase = ''

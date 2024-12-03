@@ -1,0 +1,27 @@
+From eba1223b7ef7c404dbcba165f61dae8ad12fc389 Mon Sep 17 00:00:00 2001
+From: Porter Jones <porter@mechanical-orchard.com>
+Date: Tue, 3 Dec 2024 10:08:29 -0800
+Subject: [PATCH] Use posix definitions for stat values
+
+---
+ utils.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/utils.h b/utils.h
+index 39274c6..14e4d78 100644
+--- a/utils.h
++++ b/utils.h
+@@ -46,8 +46,8 @@
+ 	#if !defined(__MINGW32__) && !defined(__MINGW64__)
+ 		typedef int HANDLE;
+ 		#define INVALID_HANDLE_VALUE 0
+-		#define _S_IREAD	__S_IREAD
+-		#define _S_IWRITE	__S_IWRITE
++		#define _S_IREAD	S_IRUSR
++		#define _S_IWRITE	S_IWUSR
+ 
+ 		#define _O_TRUNC 	O_TRUNC
+ 		#define _O_RDONLY	O_RDONLY
+-- 
+2.45.1
+
