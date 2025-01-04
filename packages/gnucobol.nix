@@ -23,11 +23,12 @@ in
     };
 
     nativeBuildInputs = [
-      pkgs.autoconf
+      pkgs.pkg-config
+      pkgs.autoconf269
       pkgs.automake
       pkgs.help2man
       pkgs.libtool
-      pkgs.pkg-config
+      pkgs.perl
       pkgs.texinfo
       pkgs.texliveBasic
     ];
@@ -63,6 +64,10 @@ in
       autoreconf -vfi -I m4
       ./autogen.sh
     '';
+
+    # error: call to undeclared function 'xmlCleanupParser'
+    # ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    env.CFLAGS = "-Wno-error=implicit-function-declaration";
 
     enableParallelBuilding = true;
 
