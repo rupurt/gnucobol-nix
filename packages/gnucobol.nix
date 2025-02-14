@@ -1,30 +1,33 @@
 {
   pkgs,
-  specialArgs ? {},
+  pname ? "gnucobol",
+  version ? "3.2.0",
+  owner ? "rupurt",
+  repo ? "GnuCOBOL",
+  rev ? "gnucobol-3.2",
+  sha256 ? "sha256-10wBjVe8yfdZkqfDjED3Casb32oKe2pEI0epT6paJgI=",
+  indexedHandler ? "db",
 }: let
-  defaultArgs = {
-    pname = "gnucobol";
-    version = "3.2.0";
-    owner = "rupurt";
-    repo = "GnuCOBOL";
-    rev = "gnucobol-3.2";
-    sha256 = "sha256-10wBjVe8yfdZkqfDjED3Casb32oKe2pEI0epT6paJgI=";
+  validIndexedHandlers = {
+    "db" = pkgs.db;
+    "visam" = pkgs.gnucobol-pkgs.visam;
+    "vbisam" = pkgs.gnucobol-pkgs.vbisam;
   };
-  args = defaultArgs // specialArgs;
+  indexedHandlerPkg = validIndexedHandlers.${indexedHandler};
 in
   pkgs.gccStdenv.mkDerivation {
-    pname = args.pname;
-    version = args.version;
+    pname = pname;
+    version = version;
     src = pkgs.fetchFromGitHub {
-      owner = args.owner;
-      repo = args.repo;
-      rev = args.rev;
-      sha256 = args.sha256;
+      owner = owner;
+      repo = repo;
+      rev = rev;
+      sha256 = sha256;
     };
 
     nativeBuildInputs = [
       pkgs.pkg-config
-      pkgs.autoconf269
+      pkgs.autoconf
       pkgs.automake
       pkgs.help2man
       pkgs.libtool
@@ -36,13 +39,13 @@ in
     buildInputs =
       [
         pkgs.cjson
-        pkgs.db
         pkgs.gmp
         pkgs.ncurses
         pkgs.flex
         pkgs.bison
         pkgs.gettext
         pkgs.libxml2
+        indexedHandlerPkg
       ]
       ++ pkgs.lib.optional pkgs.stdenv.isDarwin [
         pkgs.darwin.apple_sdk.frameworks.CoreFoundation
@@ -57,6 +60,14 @@ in
 
     # Without this, we get a cycle between bin and dev
     propagatedBuildOutputs = [];
+
+    configureFlags =
+      [
+        "--with-${indexedHandler}"
+      ]
+      ++ pkgs.lib.optional (indexedHandler != "db") [
+        "--without-db"
+      ];
 
     # GnuCOBOL requires libtool 2.4.6 by default, use 'autoreconf -vfi -I m4' to
     # enable libtool version installed with nix
@@ -96,7 +107,7 @@ in
       description = "An open-source COBOL compiler";
       homepage = "https://sourceforge.net/projects/gnucobol/";
       license = with licenses; [gpl3Only lgpl3Only];
-      maintainers = with maintainers; [ericsagnes lovesegfault];
+      maintainers = with maintainers; [rupurt];
       platforms = platforms.all;
     };
   }

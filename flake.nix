@@ -2,7 +2,7 @@
   description = "Nix flake for GnuCOBOL utilities";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -21,8 +21,34 @@
     in {
       # packages exported by the flake
       packages = rec {
+        visam = pkgs.stdenv.mkDerivation {
+          name = "visam";
+          src = pkgs.fetchzip {
+            url = "http://inglenet.ca/Products/GnuCOBOL/visam-2.2.tar.Z";
+            hash = "sha256-z/K4caaHEgPSQmfwLM1vRyTP/dR/D7eGDjkWzt3JAmA=";
+          };
+        };
+        vbisam = pkgs.stdenv.mkDerivation {
+          name = "vbisam";
+          src = pkgs.fetchzip {
+            url = "http://inglenet.ca/Products/GnuCOBOL/vbisam-2.2.tar.Z";
+            hash = "sha256-54NoeXjQ52fsVm3McpEsya3uXwoKnReVbLz3znRSo6E=";
+          };
+        };
         gnucobol = pkgs.callPackage ./packages/gnucobol.nix {
           inherit pkgs;
+        };
+        gnucobol-db = pkgs.callPackage ./packages/gnucobol.nix {
+          inherit pkgs;
+          indexedHandler = "db";
+        };
+        gnucobol-visam = pkgs.callPackage ./packages/gnucobol.nix {
+          inherit pkgs;
+          indexedHandler = "visam";
+        };
+        gnucobol-vbisam = pkgs.callPackage ./packages/gnucobol.nix {
+          inherit pkgs;
+          indexedHandler = "vbisam";
         };
         gcsort = pkgs.callPackage ./packages/gcsort.nix {
           inherit pkgs;
