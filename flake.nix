@@ -42,6 +42,10 @@
           inherit pkgs;
           indexedHandler = "db";
         };
+        gnucobol-odbcisam = pkgs.callPackage ./packages/gnucobol.nix {
+          inherit pkgs;
+          indexedHandler = "odbc";
+        };
         gnucobol-visam = pkgs.callPackage ./packages/gnucobol.nix {
           inherit pkgs;
           indexedHandler = "visam";

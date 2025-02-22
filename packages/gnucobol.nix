@@ -10,6 +10,7 @@
 }: let
   validIndexedHandlers = {
     "db" = pkgs.db;
+    "odbc" = pkgs.unixODBC;
     "visam" = pkgs.gnucobol-pkgs.visam;
     "vbisam" = pkgs.gnucobol-pkgs.vbisam;
   };
