@@ -19,6 +19,23 @@
         overlays = [self.overlay];
       };
     in {
+      devShells = {
+        default = pkgs.mkShell {
+          name = "gcsort-dev-shell";
+
+          buildInputs = [
+#            pkgs.gcc
+#            pkgs.lldb
+            pkgs.gnucobol-pkgs.gnucobol.dev
+            pkgs.gnucobol-pkgs.gnucobol.lib
+#            pkgs.pkg-config
+          ];
+
+          shellHook = ''
+            echo "Welcome to the GCSORT dev shell!"
+          '';
+        };
+      };
       # packages exported by the flake
       packages = rec {
         visam = pkgs.stdenv.mkDerivation {

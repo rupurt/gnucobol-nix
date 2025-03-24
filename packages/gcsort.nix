@@ -33,6 +33,13 @@ in
       ]
       ++ pkgs.lib.optional pkgs.stdenv.isDarwin [];
 
+    # Add debug flags and prevent stripping
+    #NIX_CFLAGS_COMPILE = "-g -O0";
+    # dontStrip = true;
+
+    # Force the Makefile into debug mode
+    # makeFlags = [ "DEBUG=YES" ];
+
     patches = [
       ./0001-gcsort-conditionally-include-os-x-headers.patch
       ./0002-gcsort-comment-include-malloc.h.patch
