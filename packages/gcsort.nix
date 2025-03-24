@@ -6,9 +6,9 @@
     pname = "gcsort";
     owner = "rupurt";
     repo = "GnuCOBOL-Contrib";
-    rev = "b9548c4261eae8d5dc83d27b034145bdece2b0c8";
-    version = "1.04.01";
-    sha256 = "sha256-gHm9yf7hjEK7BMhBuSZZ8WL2EhXEqkMNXv8ClmIyeBM=";
+    rev = "e7072d88f2cf1f0c457f507934e6a24317d0a633";
+    version = "1.04.05";
+    sha256 = "sha256-3JhwcuCTztgFnpkbPSibduTj3tJuiSF6x99iRUzGjnU=";
   };
   args = defaultArgs // specialArgs;
   repo = pkgs.fetchFromGitHub {
