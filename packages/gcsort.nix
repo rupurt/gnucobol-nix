@@ -39,6 +39,7 @@ in
       ./0003-gcsort-use-posix-definitions-for-stat-values.patch
       ./0004-gcsort-include-pthread-h-for-mac-in-gcshare-h.patch
       ./0005-gcsort-define-utils-h-stat64-for-mac.patch
+      ./0006-gcsort-qsort-mac.patch
     ];
 
     buildPhase = ''
