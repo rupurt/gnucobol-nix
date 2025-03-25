@@ -1,0 +1,26 @@
+From 1d3cba1376b6c813e5cc2527f10f3427774820c5 Mon Sep 17 00:00:00 2001
+From: Alex Kwiatkowski <alex@fremantle.io>
+Date: Mon, 24 Mar 2025 17:27:09 -0700
+Subject: [PATCH] patch gcsort include pthread.h for mac in gcshare.h
+
+---
+ gcshare.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/gcshare.h b/gcshare.h
+index 162c420..1ddcf2b 100644
+--- a/gcshare.h
++++ b/gcshare.h
+@@ -52,6 +52,9 @@
+ 		#endif
+ 		extern int gCreateMutex;
+ #if defined(_THREAD_LINUX_ENV)
++  #ifdef __APPLE__
++    #include <pthread.h>
++  #endif
+ 		extern pthread_mutex_t job_thread_mutex;
+ #else
+ 		extern HANDLE ghMutexJob;
+-- 
+2.48.1
+

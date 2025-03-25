@@ -36,7 +36,9 @@ in
     patches = [
       ./0001-gcsort-conditionally-include-os-x-headers.patch
       ./0002-gcsort-comment-include-malloc.h.patch
-      ./0003-use-posix-definitions-for-stat-values.patch
+      ./0003-gcsort-use-posix-definitions-for-stat-values.patch
+      ./0004-gcsort-include-pthread-h-for-mac-in-gcshare-h.patch
+      ./0005-gcsort-define-utils-h-stat64-for-mac.patch
     ];
 
     buildPhase = ''
