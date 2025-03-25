@@ -1,0 +1,26 @@
+From 5075af84088f11374478cf522a6983123522a27d Mon Sep 17 00:00:00 2001
+From: Alex Kwiatkowski <alex@fremantle.io>
+Date: Mon, 24 Mar 2025 17:59:24 -0700
+Subject: [PATCH] patch gcsort define utils.h stat64 for mac
+
+---
+ utils.h | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/utils.h b/utils.h
+index 7c8a774..653cc43 100644
+--- a/utils.h
++++ b/utils.h
+@@ -71,6 +71,9 @@
+ 	#define _stricmp strcasecmp
+ 	#define strnicmp strncasecmp
+ 	#define _strdup  strdup
++#ifdef __APPLE__
++  #define stat64 stat
++#endif
+ 	#define _struct_stat64  stat64  
+ 	#define stat_file stat64
+ #else
+-- 
+2.48.1
+
