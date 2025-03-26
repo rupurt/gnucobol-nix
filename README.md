@@ -39,7 +39,7 @@ of the upstream SourceForge SVN repositories.
 
       # nix develop -c $SHELL
       devShells.default = pkgs.mkShell {
-        name = "default dev shell";
+        name = "default dev console";
 
         packages = with pkgs; [
           gnucobol-pkgs.gnucobol.bin
@@ -58,7 +58,7 @@ of the upstream SourceForge SVN repositories.
 
 An open-source `COBOL` compiler
 
-```shell
+```console
 > cobc --help
 GnuCOBOL compiler for most COBOL dialects with lots of extensions
 
@@ -77,7 +77,7 @@ Options:
 
 `COBOL` driver program for `GnuCOBOL` modules
 
-```shell
+```console
 > cobcrun --help
 GnuCOBOL module loader
 
@@ -110,9 +110,9 @@ General help using GNU software: <https://www.gnu.org/gethelp/>
 Shell script which simplifies configuring applications against a particular version
 of the `GnuCOBOL` library.
 
-```shell
+```console
 > cob-config
-This is a shell script which simplifies configuring applications
+This is a console script which simplifies configuring applications
 against a particular version of the GnuCOBOL library.
 
 Usage: cob-config [options]
@@ -142,13 +142,66 @@ Options:
 
 A sort tool that implements a subset of the Micro Focus `MFSORT` utility
 
-```shell
+```console
 > gcsort --help
+________________________________________________________________________________________
+ gcsort help
+ gcsort is a utility to sort, merge, copy and join records in a file into a
+   specified order in GnuCOBOL environment.
+________________________________________________________________________________________
+ Syntax case insensitive
+ Return code : 0 (ok) - 4 (warning) - 16 (error)
+________________________________________________________________________________________
+Usage with file parameters  : gcsort <options> take filename
+Usage from command line     : gcsort <options> <control statements>
+________________________________________________________________________________________
+gcsort options
+-fsign=[ASCII|EBCDIC] define display sign representation
+-fcolseq=[NATIVE|ASCII|EBCDIC] collating sequence to use
+-febcdic-table=<cconv-table>/<file>     EBCDIC/ASCII translation table
+-mt=<num>  number of threads to be used | -mt dynamical number of threads to be used
+________________________________________________________________________________________
+gcsort control statements
+Notations: '{name}' = parameters , '|' = Alternative format of control statement
+========================================================================================
+                Section for SORT, MERGE and COPY control statements
+========================================================================================
+ SORT | MERGE | COPY FIELDS Control statement for Sort, Merge, Copy file(s)
+________________________________________________________________________________________
+ USE                 Declare input file(s)
+ GIVE                Declare output file
+ [ SUM FIELDS ]      Sum fields for same record key, or eliminate duplicate keys)
+ [ RECORD     ]      Record control statement
+ [ INCLUDE    ]      Select input records that respect include condition(s)
+ [ OMIT       ]      Omit input records that respect omit condition(s)
+ [ INREC      ]      Reformat input record Before sort, merge or copy operation
+ [ OUTREC     ]      Reformat input record After sort, merge or copy operation
+ [ OUTFIL     ]      Create one or more output files for sort,merge or copy operation
+ [ OPTION     ]      Specifies option for control statements
+________________________________________________________________________________________
+gcsort
+    SORT | MERGE | COPY
+         FIELDS({Pos},{Len},{FormatType},{Order}, ...)          |
+         FIELDS({Pos},{Len},{Order}, ...),FORMAT={FormatType}   |
+         FIELDS=COPY
 ...
 ```
 
+## Docker
+
+```console
+> docker build . -t gnucobol:latest
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.25kB done
+#1 DONE 0.1s
+...
+```
+
+
 ## Development
 
-```shell
+```console
 > nix develop -c $SHELL
 ```
