@@ -77,6 +77,7 @@ RUN \
     --show-trace \
     --log-format raw \
     build .#gcsort --out-link /tmp/output/gcsort
+  cp -R $(nix-store -qR /tmp/output/gcsort) /tmp/nix-store-closure-gcsort
   cp -R $(nix-store -qR /tmp/output/gcsort) /tmp/nix-store-closure
 EOF
 # esqloc
@@ -96,5 +97,6 @@ EOF
 
 FROM alpine
 WORKDIR /app
+COPY --from=builder /tmp/nix-store-closure-gcsort /nix/store-gcsort
 COPY --from=builder /tmp/nix-store-closure /nix/store
 COPY --from=builder /tmp/output/ /app/
