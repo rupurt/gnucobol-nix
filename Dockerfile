@@ -3,6 +3,7 @@ FROM nixos/nix:latest AS builder
 WORKDIR /tmp/build
 RUN mkdir /tmp/output
 RUN mkdir /tmp/nix-store-closure
+RUN mkdir /tmp/nix-store-closure-gcsort
 COPY flake.lock flake.lock
 COPY flake.nix flake.nix
 COPY packages packages
